@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Etiquette MANUAL</title>
+  <meta charset="utf-8">
+</head>
+<style>
+  .item.manual {
+  display: flex;
+  flex-direction: row;
+  height: 74.6mm;
+  width: 210.8mm;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 15px;
+  border-color: lightgrey;
+  position: relative;
+  page-break-inside: avoid;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.item.manual #barcode {
+  height: 37.1mm;
+  width: 105.4mm;
+  object-fit: fill;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item.manual #designation {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  align-items: center;
+}
+
+.item.manual .reference {
+  font-size: 18pt;
+}
+
+.manual .informations {
+  line-height: 1mm;
+}
+
+.item.manual .subcontainer {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding-left: 10px;
+}
+
+.item.manual .subcontainer:nth-child(2) {
+  position: relative;
+}
+
+.item.manual .subcontainer:nth-child(2)::before {
+  content : "";
+  position : absolute;
+  left: 0;
+  top : 0;
+  height: 33%;
+  border-left: 1px solid black;
+  box-sizing: border-box;
+}
+
+.item.manual .designation {
+  font-size: 10.5pt;
+}
+
+.item.manual .pcb {
+  margin-left: 35.5mm;
+}
+
+</style>
+
+<body>
+  <div class="item manual">
+    <div class="subcontainer">
+        <div class="informations">
+            <p class="reference">Référence : xxxx</p>
+            <p class="designation">xxxx</p>
+            <div style="display: flex; flex-direction: row;">
+                <p class="bn">BN: xxxxxx</p>
+                <p class="pcb">PCB: 1234</p>
+            </div>
+        </div>
+        <div id="barcode">
+            <img style="height: 33.5mm; width: 90mm;"
+              src="https://barcode.tec-it.com/barcode.ashx?data=011305656200318210013060&code=GS1-128&translate-esc=true"
+              alt="Code-barres">
+          </div>
+    </div>
+
+    <div class="subcontainer">
+        <div class="informations">
+            <p class="reference">Référence : xxxx</p>
+            <p class="designation">xxxx</p>
+            <div style="display: flex; flex-direction: row;">
+                <p class="bn">BN: xxxxxx</p>
+                <p class="pcb">PCB: 1234</p>
+            </div>
+        </div>
+        <div id="barcode">
+            <img style="height: 33.5mm; width: 90mm;"
+              src="https://barcode.tec-it.com/barcode.ashx?data=011305656200318210013060&code=GS1-128&translate-esc=true"
+              alt="Code-barres">
+        </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

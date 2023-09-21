@@ -1,0 +1,60 @@
+#etiquette-auchan {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 201mm;
+    height: 73mm;
+    border: 1px solid lightgrey;
+    border-radius: 5%;
+}
+
+#informations {
+    margin-left: 8mm;
+}
+
+#reference {
+    font-size: 16pt;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+}
+
+#title {
+    font-size: 16pt;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+}
+
+#code {
+    font-size: 16pt;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+}
+
+#nbrpieces {
+    font-size: 22pt;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+}
+
+#barcode {
+    margin-top: 20.8mm;
+    margin-right : 10mm;
+}
+
+#barcode img {
+    width: 50.9mm;
+    height: 37mm;
+}
+
+#code span {
+    font-size: 20pt;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+}
+
+#nbrpieces span {
+    margin-left: 12.6mm;
+    font-size: 20pt;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+}

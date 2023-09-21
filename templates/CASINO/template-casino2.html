@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Etiquettecasino</title>
+
+    <meta charset="utf-8">
+
+</head>
+<style>
+
+.myclass{text-transform: uppercase;font-weight: 700;}
+.mysecondclass{text-transform: capitalize;font-weight: 700;}
+#firstcontainer{
+    display: flex;
+    flex-direction: row;
+    
+    width: 30%;
+    border-bottom: 3px solid black;
+}
+#border1{
+    border-left: 3px solid black;
+    padding-left: 10px;
+}
+#secondcontainer{
+    display: flex;
+    flex-direction: row;
+    
+    width: 30%;
+}
+#infodestinataire{
+    text-transform: uppercase;
+    font-weight: 700;
+}
+#containertwo{
+    width: 30%;
+    font-weight: 700;
+}
+  </style>
+<body>
+ <div id="etiquette">
+    <div id="firstcontainer">
+        <div id="infofournisseur" style="margin-right: 100px;" >
+            <p>Nom fournisseur</p>
+            <div style="line-height : 2px;">
+            <p >VULLI SAS</p>
+            <p>1Avenue des </p>
+            <p>ALPES</p>
+            <p>74150RUMILLY</p>
+            </div>
+
+        </div>
+        <div id="border1">
+            <p>Nom destinataire </p>
+        <div id="infodestinataire" >
+            <div style="line-height : 2px;">
+            <p>ENTREPOT CORBAS</p>
+            <p>BOULEVARD DES</p>
+            <p>NATIONS</p>
+            <p>69960 CORBAS</p>
+            <p>FRANCE</p>
+            </div>
+        </div>
+        </div>
+        </div>
+    </div>
+    <div id="containertwo" >
+   
+               <p >Réf . article<span style ="min-width: 20px;margin-left: 30px;font-size: larger;"><b>700200</b></span></p>  
+               <p style="min-width: 0px;"> designation <span class="mysecondclass" style="margin-left: 30px;font-size: larger;"><b><sub>Arbre magique des Klorofil </sub></b></span></p>
+               
+               <div style="line-height : 2px;">
+               <p>nombre de colis<span style="margin-left: 10px;">XXXXXX</span></p>
+               <p>numero de lot XXXXXX</p>
+               </div>
+               <p>nombre de pièces sur la palette  <sup>XXXXXXX</sup></p>
+
+               
+       
+          
+          <div id="barcode2" style="display: flex; align-items: center;margin-left:30px;">
+           <img src="https://barcode.tec-it.com/barcode.ashx?data=(00)03056560000000221&code=GS1-128&multiplebarcodes=true&translate-esc=true&unit=Min" alt="Code-barres">
+       </div>
+       <p > SCC PALETTE<span style ="min-width: 20px;margin-left: 50px;"><b>03056560000000221</b></span></P> 
+    
+        <div style="line-height : 0.005px;">
+       <div id="barcode2" style="display: flex; align-items: center;margin-left:30px;">
+         <img src="https://barcode.tec-it.com/barcode.ashx?data=(01)13056567002005(10)xxxxxx&code=GS1-128&multiplebarcodes=true&translate-esc=true&unit=Min" alt="Code-barres">
+     </div>   
+     <p><sup>SCC COLIS</sup></p>
+    </div>
+</div>
+     
+</body>
+ </html>

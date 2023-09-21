@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Etiquettefnac</title>
+</head>
+<style>
+#templatefnaceveil{
+justify-content: space-between;
+font-style: normal;
+font-size: xx-small;
+font-weight: 700;
+font-family: sans-serif;
+text-align:justify;
+
+}
+#templatefnaceveil{
+   text-transform: uppercase;
+}
+#pays{
+   text-transform: uppercase;
+}
+#fournisseur{margin-left: 100px;font-weight: 700; }
+.my-class{text-transform: uppercase;font-weight: 700;}
+
+</style>
+<body>
+   
+ 
+     <div id="templatefnaceveil" >
+        <p><b>EVEIL ET JEUX</b> </p>
+        <p id="pays">{{ pays }}</p>
+        <P>NOM DU FOURNISSEUR :<span id="fournisseur " style="margin-left:30px;">{{fournisseur}}</span></P>
+        <p class="my-class">reference fournisseur : <span style="margin-left:70px;">{{referencefournisseur}}</span></p>
+        <P class="my-class">reference fnac eveil & jeux <span style="margin-left:10px;">: </span>  <span style="margin-left:70px;">{{referencefnaceveiletjeux}}</span></P>
+        <P class="my-class">ean <span style="margin-left:10px;">:</span> <span style="margin-left:20px;">{{ean}}</span></P>
+        <P style="min-width: 200px;">LIBELLE PRODUIT: <span style="min-width: 200px;margin-left:70px;">{{libeleproduit}} </span></P>
+        <p class="my-class">nombre de pieces   <span style="margin-left:50px;">{{nombredepieces}}</span></p>
+        <P class="my-class">poids du carton: <span style="margin-left:30px;">{{poidsducarton}}</span></P>
+        <p class="my-class">dimension du carton:      <SPAN style="margin-left:60px;">{{dimcarton}}</SPAN></p>
+        <P class="my-class">commande n°:     <span style="margin-left:50px;">{{commandenum}}</span></P>
+        <p style="min-width: 200px;">CARTON N° :     <span style="margin-right: 30px ; margin-left: 50px;">{{nbrepartie}}</span> {{partie}}<span style="margin-left: 30px; margin-right: 40px;">{{nbredecolis}}</span>{{colis}}</p>
+     </div>
+    
+
+</body>
+</html>

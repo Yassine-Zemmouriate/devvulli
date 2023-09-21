@@ -1,0 +1,298 @@
+.item.auchan {
+  margin: 5px;
+}
+
+.item.aubert {
+  margin: 5px;
+}
+
+.item.orchestra {
+  margin: 0px;
+}
+
+@media print {
+  @page {
+    margin : 0;
+  }
+
+/*.container {*/
+/*  display: flex;*/
+/*  flex-wrap: wrap;*/
+/*  grid-template-columns: repeat(2, 1fr);*/
+/*  grid-column-gap: 5%;*/
+/*  width: 29.7cm; !* A4 width in pixels *!*/
+/*  margin: auto;*/
+/*  overflow: auto;*/
+/*}*/
+
+/* Styles specific to Aubert items */
+
+.item.aubert {
+  width: 163.4mm;
+  height: 50.4mm;
+  border:  1px solid lightgrey;
+  border-radius: 5%;
+}
+
+.item.aubert #barcode {
+  margin-top: 15.4mm;
+  margin-left: 64.1mm;
+  margin-right: 17.2mm;
+  object-fit:cover;
+}
+
+#print-button {
+  display: none;
+}
+
+.item {
+  page-break-before: always;
+}
+
+.item:first-child {
+  page-break-before: avoid;
+}
+
+.item.orchestra {
+  display: flex;
+  flex-direction: row;
+  width: 148mm;
+  height: 105.1mm;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 15px;
+  border-color: lightgrey;
+  position : relative;
+}
+
+
+
+#barcode-orchestra {
+  margin-top: 10.4mm;
+  margin-left: 9.4mm;
+  width: 44.7mm; 
+  height: 34.7mm;
+}
+
+#firstcont {
+  border-right: 3px solid black;
+  margin: 2.5mm;
+  width: 50%;
+}
+
+#secondcont {
+  margin: 2.5mm;
+  width: 50%;
+}
+
+#designation {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  padding: 10px;
+  align-items: center;
+}
+
+#barcode-aubert {
+  margin-top: 15.4mm;
+  margin-left: 64.1mm;
+  margin-right: 17.2mm;
+  object-fit:cover;
+}
+
+#etiquetteaubert{
+  width: 163.4mm;
+  height: 50.4mm;
+  border:  1px solid lightgrey;
+  border-radius: 5%;
+}
+
+.item.auchan #etiquette-auchan {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 201mm;
+  height: 73mm;
+  border: 1px solid lightgrey;
+  border-radius: 5%;
+}
+
+.item.auchan #informations {
+  margin-left: 8mm;
+}
+
+.item.auchan #reference {
+  font-size: 16pt;
+  font-weight: normal;
+  font-family: Arial, sans-serif;
+}
+
+.item.auchan #title {
+  font-size: 16pt;
+  font-weight: normal;
+  font-family: Arial, sans-serif;
+}
+
+.item.auchan #code {
+  font-size: 16pt;
+  font-weight: normal;
+  font-family: Arial, sans-serif;
+}
+
+.item.auchan #nbrpieces {
+  font-size: 22pt;
+  font-weight: normal;
+  font-family: Arial, sans-serif;
+}
+
+.item.auchan #barcode {
+  margin-top: 20.8mm;
+  margin-right : 10mm;
+}
+
+.item.auchan #barcode img {
+  width: 50.9mm;
+  height: 37mm;
+}
+
+.item.auchan #code span {
+  font-size: 20pt;
+  font-weight: normal;
+  font-family: Arial, sans-serif;
+}
+
+.item.auchan #nbrpieces span {
+  margin-left: 12.6mm;
+  font-size: 20pt;
+  font-weight: normal;
+  font-family: Arial, sans-serif;
+}
+
+.item.oxybul #templatefnaceveil{
+  width: 148.5mm;
+ height: 102.4mm;
+ border:  1px solid lightgrey;
+ border-radius: 5%;
+ 
+ }
+
+
+ .item.oxybul #templatefnaceveil{
+  text-transform: uppercase;
+}
+
+.item.oxybul #pays{
+  text-transform: uppercase;
+}
+
+.item.oxybul #fournisseur {
+  margin-left: 100px;
+}
+
+.item.oxybul .my-class{
+  text-transform: uppercase;
+  font-size: 12.1pt; 
+  font-weight: normal; 
+  font-family: Arial, sans-serif;
+  margin-left: 5.3mm;
+}
+
+.item.fnac #partie-encadree {
+  display:flex;
+  flex-direction: row;
+  margin-top: 1mm;
+  width: 74.3mm;
+  border : 3px solid black; 
+  margin-left: 26mm;
+  transform: scaleX(0.95);
+  transform-origin: left;
+  }
+
+.item.fnac #etiquettefnac {
+  width: 104mm;
+  height: 74mm;
+  border: 2px solid lightgray;
+  border-radius: 5%;
+    
+}
+
+ 
+.item.fnac  #informations {
+  line-height: 2.1mm;
+  font-size: 12pt;
+  font-weight: normal;
+  margin-left: 3mm;
+  min-width: max-content;
+  font-family: Arial;
+  transform: scaleX(0.7);
+  transform-origin: left;
+}
+
+.item.manual {
+  display: flex;
+  flex-direction: row;
+  height: 74.6mm;
+  width: 210.8mm;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 15px;
+  border-color: lightgrey;
+  position: relative;
+  page-break-inside: avoid;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.item.manual #barcode {
+  height: 37.1mm;
+  width: 105.4mm;
+  object-fit: fill;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item.manual #designation {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  align-items: center;
+}
+
+.item.manual .reference {
+  font-size: 18pt;
+}
+
+.manual .informations {
+  line-height: 1mm;
+}
+
+.item.manual .subcontainer {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding-left: 10px;
+}
+
+.item.manual .subcontainer:nth-child(2) {
+  position: relative;
+}
+
+.item.manual .subcontainer:nth-child(2)::before {
+  content : "";
+  position : absolute;
+  left: 0;
+  top : 0;
+  height: 33%;
+  border-left: 1px solid black;
+  box-sizing: border-box;
+}
+
+.item.manual .designation {
+  font-size: 10.5pt;
+}
+
+.item.manual .pcb {
+  margin-left: 35.5mm;
+}
+
+}
