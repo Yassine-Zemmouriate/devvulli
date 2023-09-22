@@ -54,23 +54,26 @@
                 console.log("Parameter Entry Type", entryTypeValue)
                 if(entryTypeValue === "Manuel"){
                     worksheet = dashboard.worksheets[1];
-                    if (manualBNParameter && manualReferenceParameter) {
-                      manualBNParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
-                        parameterChangedEvent.getParameterAsync().then((parameter) => {
-                          console.log("Pamraeter Manual BN : ", parameter.currentValue.nativeValue);
-                        })
-                      })
-                      manualReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
-                        parameterChangedEvent.getParameterAsync().then((parameter) => {
-                          console.log("Pamraeter Manual Reference : ", parameter.currentValue.nativeValue);
-                        })
-                      })
-                    }
                 } else if (entryTypeValue === "Course") {
                     worksheet = dashboard.worksheets[0];
                 }
+                console.log("Worksheet : ", worksheet);
               })
+            })
+          }
 
+          if (manualBNParameter) {
+            manualBNParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
+              parameterChangedEvent.getParameterAsync().then((parameter) => {
+                console.log("Pamraeter Manual BN : ", parameter.currentValue.nativeValue);
+              })
+            })}
+
+          if (manualReferenceParameter) {
+            manualReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
+              parameterChangedEvent.getParameterAsync().then((parameter) => {
+                console.log("Pamraeter Manual Reference : ", parameter.currentValue.nativeValue);
+              })
             })
           }
         });
