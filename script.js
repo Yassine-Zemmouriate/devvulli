@@ -22,8 +22,44 @@
         })
         .catch(error => console.error(error));
 
+        const parameters = dashboard.getParametersAsync();
+
+        parameters.then((parameters) => {
+          const entryTypeParameter = parameters.find(p => p.name === 'type_entree');
+          const pageNumberParameter = parameters.find(p => p.name === "unique_ref");
+          const manualBNParameter = parameters.find(p => p.name === "manuel_bn");
+          const manualReferenceParameter = parameters.find(p => p.name === "manuel_ref");
+
+          if (entryTypeParameter) {
+            entryTypeParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
+              parameterChangedEvent.getParameterAsync().then((parameter) => {
+                let worksheet = dashboard.worksheets[0];
+                const entryTypeValue = parameter.currentValue.nativeValue;
+                if(entryTypeValue === "Manuel"){
+                    worksheet = dashboard.worksheets[1];
+                    if (manualBNParameter && manualReferenceParameter) {
+                      manualBNParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
+                        parameterChangedEvent.getParameterAsync().then((parameter) => {
+                          console.log("Pamraeter Manual BN : ", parameter.currentValue.nativeValue);
+                        })
+                      })
+                      manualReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
+                        parameterChangedEvent.getParameterAsync().then((parameter) => {
+                          console.log("Pamraeter Manual Reference : ", parameter.currentValue.nativeValue);
+                        })
+                      })
+                    }
+                } else if (entryTypeValue === "Course") {
+                    worksheet = dashboard.worksheets[0];
+                }
+              })
+
+            })
+          }
+        });
+
       // Get data from worksheet
-      const worksheet = dashboard.worksheets[0];
+
       worksheet.getSummaryDataAsync().then((sumdata) => {
         const items = convertDataToItems(sumdata, false);
 
@@ -40,24 +76,7 @@
             renderItems(items);
           });
         }));
-        tableau.extensions.dashboardContent.dashboard.getParametersAsync().then(function (parameters) {
-          const pageNumberParameter = parameters.find(p => p.name === 'unique_ref');
-          if (pageNumberParameter) {
-            // Listen for changes to the Page Number parameter
-            pageNumberParameter.addEventListener(tableau.TableauEventType.ParameterChanged, function (parameterChangedEvent) {
-              parameterChangedEvent.getParameterAsync().then((parameter) => {
-                const isDuplicated = parameter.currentValue.nativeValue;
-                const worksheet = tableau.extensions.dashboardContent.dashboard.worksheets[0];
-                worksheet.getSummaryDataAsync().then((sumdata) => {
-                  const items = convertDataToItems(sumdata, isDuplicated);
-  
-                  // Render filtered items
-                  renderItems(items);
-                });
-              })
-            });
-          };
-        });
+
       });
     });
   });
@@ -94,7 +113,7 @@
 
     if (!isDuplicated) {
       const duplicatedItems = duplicateObjects(items);
-    
+
       return duplicatedItems;
     } else {
       return items;
@@ -107,7 +126,7 @@
    * Renders the items to the my-extension.html template.
    * @param {Array} items - The items to render.
    */
-  function renderItems(items) {
+  function renderItems(items, params=[]) {
     const container = document.createElement('div');
     container.className = 'container';
 
@@ -206,7 +225,7 @@
     </div>
     `;
           break;
-        
+
         case "Modèle OXY":
           itemClass = 'oxybul';
           itemContent = `
@@ -267,32 +286,32 @@
             itemClass = 'manual';
             itemContent = `<div class="subcontainer">
             <div class="informations">
-                <p class="reference">Référence : ${item.reference}</p>
-                <p class="designation">xxxx</p>
+                <p class="reference">Référence : ${item.Reference}</p>
+                <p class="designation">${item.designation}</p>
                 <div style="display: flex; flex-direction: row;">
-                    <p class="bn">BN: xxxxxx</p>
-                    <p class="pcb">PCB: 1234</p>
+                    <p class="bn">BN: ${params.manuel_bn}</p>
+                    <p class="pcb">PCB: ${item.pcb}</p>
                 </div>
             </div>
             <div id="barcode">
                 <img style="height: 33.5mm; width: 90mm;"
-                  src="https://barcode.tec-it.com/barcode.ashx?data=011305656200318210013060&code=GS1-128&translate-esc=true"
+                  src="https://barcode.tec-it.com/barcode.ashx?data=${item.barcode_manuel}&code=GS1-128&translate-esc=true"
                   alt="Code-barres">
               </div>
         </div>
     
         <div class="subcontainer">
             <div class="informations">
-                <p class="reference">Référence : xxxx</p>
-                <p class="designation">xxxx</p>
+                <p class="reference">Référence : ${item.Reference}</p>
+                <p class="designation">${item.designation}</p>
                 <div style="display: flex; flex-direction: row;">
-                    <p class="bn">BN: xxxxxx</p>
-                    <p class="pcb">PCB: 1234</p>
+                    <p class="bn">BN: ${params.manuel_bn}</p>
+                    <p class="pcb">PCB: ${item.pcb}</p>
                 </div>
             </div>
             <div id="barcode">
                 <img style="height: 33.5mm; width: 90mm;"
-                  src="https://barcode.tec-it.com/barcode.ashx?data=011305656200318210013060&code=GS1-128&translate-esc=true"
+                  src="https://barcode.tec-it.com/barcode.ashx?data=${item.barcode_manuel}&code=GS1-128&translate-esc=true"
                   alt="Code-barres">
             </div>
         </div>`;
