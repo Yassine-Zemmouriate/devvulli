@@ -35,6 +35,7 @@
             entryTypeParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
               parameterChangedEvent.getParameterAsync().then((parameter) => {
                 const entryTypeValue = parameter.currentValue.nativeValue;
+                console.log("Parameter Entry Type", entryTypeValue)
                 if(entryTypeValue === "Manuel"){
                     worksheet = dashboard.worksheets[1];
                     if (manualBNParameter && manualReferenceParameter) {
