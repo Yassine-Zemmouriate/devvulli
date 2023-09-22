@@ -23,6 +23,7 @@
         .catch(error => console.error(error));
 
         const parameters = dashboard.getParametersAsync();
+        let worksheet = dashboard.worksheets[0];
 
         parameters.then((parameters) => {
           const entryTypeParameter = parameters.find(p => p.name === 'type_entree');
@@ -33,7 +34,6 @@
           if (entryTypeParameter) {
             entryTypeParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
               parameterChangedEvent.getParameterAsync().then((parameter) => {
-                let worksheet = dashboard.worksheets[0];
                 const entryTypeValue = parameter.currentValue.nativeValue;
                 if(entryTypeValue === "Manuel"){
                     worksheet = dashboard.worksheets[1];
