@@ -31,6 +31,22 @@
           const manualBNParameter = parameters.find(p => p.name === "manuel_bn");
           const manualReferenceParameter = parameters.find(p => p.name === "manuel_ref");
 
+          if (pageNumberParameter) {
+            // Listen for changes to the Page Number parameter
+            pageNumberParameter.addEventListener(tableau.TableauEventType.ParameterChanged, function (parameterChangedEvent) {
+              parameterChangedEvent.getParameterAsync().then((parameter) => {
+                const isDuplicated = parameter.currentValue.nativeValue;
+                const worksheet = tableau.extensions.dashboardContent.dashboard.worksheets[0];
+                worksheet.getSummaryDataAsync().then((sumdata) => {
+                  const items = convertDataToItems(sumdata, isDuplicated);
+  
+                  // Render filtered items
+                  renderItems(items);
+                });
+              })
+            });
+          };
+
           if (entryTypeParameter) {
             entryTypeParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
               parameterChangedEvent.getParameterAsync().then((parameter) => {
