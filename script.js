@@ -9,10 +9,25 @@
   $(document).ready(function () {
 
     tableau.extensions.initializeAsync().then(function () {
-      
+
       const dashboard = tableau.extensions.dashboardContent.dashboard;
       const container = document.getElementById('my-extension');
       const dashboardObjects = dashboard.objects;
+
+      let extensionName = ["manuel_ref", "manuel_bn"];
+      
+      let extensionVisibilityObject = {};
+
+      dashboardObjects.forEach((object) => {
+        if(extensionName.includes(object.name)){
+          extensionVisibilityObject[object.id] = tableau.ZoneVisibilityType.Hide
+        }
+      })
+
+      tableau.extensions.dashboardContent.dashboard.setZoneVisibilityAsync(extensionVisibilityObject).then(() => {
+        console.log("done");
+      })
+      
 
       dashboardObjects.forEach((object) => {
         console.log(object.name + ":" + object.type + ":" + object.id + ":" + object.isVisible);
