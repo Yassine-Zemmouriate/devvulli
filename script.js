@@ -58,16 +58,34 @@
                     worksheet = dashboard.worksheets[0];
                 }
                 console.log("Worksheet : ", worksheet);
+                worksheet.getSummaryDataAsync().then((sumdata) => {
+                  const items = convertDataToItems(sumdata, false);
+          
+                  // Render all items initially
+                  renderItems(items);
+          
+                  // Listen for filter change
+                  unregisterHandlerFunctions.push(worksheet.addEventListener(tableau.TableauEventType.FilterChanged, function (filterEvent) {
+                    // Get filtered data
+                    worksheet.getSummaryDataAsync().then((sumdata) => {
+                      const items = convertDataToItems(sumdata, false);
+          
+                      // Render filtered items
+                      renderItems(items);
+                    });
+                  }));
+          
+                });
               })
             })
-          }
+          };
 
           if (manualBNParameter) {
             manualBNParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
               parameterChangedEvent.getParameterAsync().then((parameter) => {
                 console.log("Pamraeter Manual BN : ", parameter.currentValue.nativeValue);
               })
-            })}
+            })};
 
           if (manualReferenceParameter) {
             manualReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
@@ -75,29 +93,12 @@
                 console.log("Pamraeter Manual Reference : ", parameter.currentValue.nativeValue);
               })
             })
-          }
+          };
         });
 
       // Get data from worksheet
 
-      worksheet.getSummaryDataAsync().then((sumdata) => {
-        const items = convertDataToItems(sumdata, false);
-
-        // Render all items initially
-        renderItems(items);
-
-        // Listen for filter change
-        unregisterHandlerFunctions.push(worksheet.addEventListener(tableau.TableauEventType.FilterChanged, function (filterEvent) {
-          // Get filtered data
-          worksheet.getSummaryDataAsync().then((sumdata) => {
-            const items = convertDataToItems(sumdata, false);
-
-            // Render filtered items
-            renderItems(items);
-          });
-        }));
-
-      });
+      
     });
   });
 
