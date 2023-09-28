@@ -23,6 +23,7 @@
         .catch(error => console.error(error));
 
         const parameters = dashboard.getParametersAsync();
+        console.log("Un appel qui initialise worksheet");
         let worksheet = dashboard.worksheets[0];
 
         parameters.then((parameters) => {
@@ -57,25 +58,7 @@
                 } else if (entryTypeValue === "Course") {
                     worksheet = dashboard.worksheets[0];
                 }
-                console.log("Worksheet : ", worksheet);
-                worksheet.getSummaryDataAsync().then((sumdata) => {
-                  const items = convertDataToItems(sumdata, false);
-          
-                  // Render all items initially
-                  renderItems(items);
-          
-                  // Listen for filter change
-                  unregisterHandlerFunctions.push(worksheet.addEventListener(tableau.TableauEventType.FilterChanged, function (filterEvent) {
-                    // Get filtered data
-                    worksheet.getSummaryDataAsync().then((sumdata) => {
-                      const items = convertDataToItems(sumdata, false);
-          
-                      // Render filtered items
-                      renderItems(items);
-                    });
-                  }));
-          
-                });
+                
               })
             })
           };
@@ -98,7 +81,26 @@
 
       // Get data from worksheet
 
-      
+      worksheet.getSummaryDataAsync().then((sumdata) => {
+        const items = convertDataToItems(sumdata, false);
+        console.log(`Worksheet : ${worksheet.name}`);
+        console.log(items);
+
+        // Render all items initially
+        renderItems(items);
+
+        // Listen for filter change
+        unregisterHandlerFunctions.push(worksheet.addEventListener(tableau.TableauEventType.FilterChanged, function (filterEvent) {
+          // Get filtered data
+          worksheet.getSummaryDataAsync().then((sumdata) => {
+            const items = convertDataToItems(sumdata, false);
+
+            // Render filtered items
+            renderItems(items);
+          });
+        }));
+
+      });
     });
   });
 
