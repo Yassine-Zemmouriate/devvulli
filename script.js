@@ -12,8 +12,11 @@
       
       const dashboard = tableau.extensions.dashboardContent.dashboard;
       const container = document.getElementById('my-extension');
+      const dashboardObjects = dashboard.objects;
 
-      dashboard.objects.forEach((object) => {
+      console.log("Listes des objets : ", dashboardObjects);
+
+      dashboardObjects.forEach((object) => {
         console.log(object.name + ":" + object.type + ":" + object.id + ":" + object.isVisible);
       });
 
@@ -61,8 +64,6 @@
                 if(entryTypeValue === "Manuel"){
                     worksheet = dashboard.worksheets[1];
                 } else if (entryTypeValue === "Course") {
-                  const manualBNParameterInput = document.getElementById("typein_[Parameters].[Paramètre 3]");
-                  manualBNParameterInput.style.display = "none";
                     worksheet = dashboard.worksheets[0];
                 }
                 
