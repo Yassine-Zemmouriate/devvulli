@@ -9,8 +9,13 @@
   $(document).ready(function () {
 
     tableau.extensions.initializeAsync().then(function () {
+      
       const dashboard = tableau.extensions.dashboardContent.dashboard;
       const container = document.getElementById('my-extension');
+
+      dashboard.objects.forEach((object) => {
+        console.log(object.name + ":" + object.type + ":" + object.id + ":" + object.isVisible);
+      });
 
       const url = 'index.html';
 
