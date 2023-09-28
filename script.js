@@ -14,8 +14,6 @@
       const container = document.getElementById('my-extension');
       const dashboardObjects = dashboard.objects;
 
-      console.log("Listes des objets : ", dashboardObjects);
-
       dashboardObjects.forEach((object) => {
         console.log(object.name + ":" + object.type + ":" + object.id + ":" + object.isVisible);
       });
@@ -65,6 +63,8 @@
                     worksheet = dashboard.worksheets[1];
                 } else if (entryTypeValue === "Course") {
                     worksheet = dashboard.worksheets[0];
+                    dashboardObjects[5].isVisible = false;
+                    dashboardObjects[6].isVisible = false;
                 }
                 
               })
