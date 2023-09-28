@@ -18,21 +18,6 @@
       
       let extensionVisibilityObject = {};
 
-      dashboardObjects.forEach((object) => {
-        if(extensionName.includes(object.name)){
-          extensionVisibilityObject[object.id] = tableau.ZoneVisibilityType.Hide
-        }
-      })
-
-      tableau.extensions.dashboardContent.dashboard.setZoneVisibilityAsync(extensionVisibilityObject).then(() => {
-        console.log("done");
-      })
-      
-
-      dashboardObjects.forEach((object) => {
-        console.log(object.name + ":" + object.type + ":" + object.id + ":" + object.isVisible);
-      });
-
       const url = 'index.html';
 
       // Load the extension HTML content into the container using innerHTML
@@ -76,10 +61,24 @@
                 console.log("Parameter Entry Type", entryTypeValue)
                 if(entryTypeValue === "Manuel"){
                     worksheet = dashboard.worksheets[1];
+                    dashboardObjects.forEach((object) => {
+                      if(extensionName.includes(object.name)){
+                        extensionVisibilityObject[object.id] = tableau.ZoneVisibilityType.Show;
+                      }
+                    });
+                    tableau.extensions.dashboardContent.dashboard.setZoneVisibilityAsync(extensionVisibilityObject).then(() => {
+                      console.log("Show Elements");
+                    })
                 } else if (entryTypeValue === "Course") {
                     worksheet = dashboard.worksheets[0];
-                    dashboardObjects[5].isVisible = false;
-                    dashboardObjects[6].isVisible = false;
+                    dashboardObjects.forEach((object) => {
+                      if(extensionName.includes(object.name)){
+                        extensionVisibilityObject[object.id] = tableau.ZoneVisibilityType.Hide
+                      }
+                    });
+                    tableau.extensions.dashboardContent.dashboard.setZoneVisibilityAsync(extensionVisibilityObject).then(() => {
+                      console.log("Hide Elements");
+                    })
                 }
                 
               })
