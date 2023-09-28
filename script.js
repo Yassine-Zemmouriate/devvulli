@@ -29,7 +29,6 @@
         .catch(error => console.error(error));
 
         const parameters = dashboard.getParametersAsync();
-        console.log("Un appel qui initialise worksheet");
         let worksheet = dashboard.worksheets[0];
 
         parameters.then((parameters) => {
@@ -60,7 +59,7 @@
                 const entryTypeValue = parameter.currentValue.nativeValue;
                 console.log("Parameter Entry Type", entryTypeValue)
                 if(entryTypeValue === "Manuel"){
-                    worksheet = dashboard.worksheets[1];
+                    worksheet = dashboard.worksheets[1].activateAsync();
                     dashboardObjects.forEach((object) => {
                       if(extensionName.includes(object.name)){
                         extensionVisibilityObject[object.id] = tableau.ZoneVisibilityType.Show;
@@ -70,7 +69,7 @@
                       console.log("Show Elements");
                     })
                 } else if (entryTypeValue === "Course") {
-                    worksheet = dashboard.worksheets[0];
+                    worksheet = dashboard.worksheets[0].activateAsync();
                     dashboardObjects.forEach((object) => {
                       if(extensionName.includes(object.name)){
                         extensionVisibilityObject[object.id] = tableau.ZoneVisibilityType.Hide
