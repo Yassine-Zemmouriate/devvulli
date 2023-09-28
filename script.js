@@ -56,6 +56,8 @@
                 if(entryTypeValue === "Manuel"){
                     worksheet = dashboard.worksheets[1];
                 } else if (entryTypeValue === "Course") {
+                  const manualBNParameterInput = document.getElementById("typein_[Parameters].[Paramètre 3]");
+                  manualBNParameterInput.style.display = "none";
                     worksheet = dashboard.worksheets[0];
                 }
                 
@@ -104,6 +106,10 @@
     });
   });
 
+  /**
+   * Display duplicated items.
+   * @param {Tableau summary data} list - 
+   */
   function duplicateObjects(list) {
     return list.reduce((acc, obj) => {
 
@@ -256,7 +262,7 @@
             <p style="font-size: 24.2pt; font-weight: normal; font-family: Arial, sans-serif;margin-top: 6mm; margin-left: 5.3mm;  ">EVEIL ET JEUX </p>
             <p class="my-class" style="margin-top:-8mm;">France</p>
             <P class="my-class" style="margin-top: 4mm;">NOM DU FOURNISSEUR :<span  style="margin-left: 6mm;">{{fournisseur}}</span></P>
-            <p class="my-class" style="margin-top: 4mm;">reference fournisseur : <span style="margin-left:22.5mm;">700200</span></p>
+            <p class="my-class" style="margin-top: 4mm;">reference fournisseur : <span style="margin-left:22.5mm;">${item.tiers_ref}</span></p>
             <P class="my-class" style="margin-top: -5mm;">reference fnac eveil & jeux  <span style="margin-left:17.3mm;">123456</span></P>
             <P class="my-class" style="margin-top: -1mm;">ean  :<span style="margin-left:6.7mm; ">{{ean}}</span></P>
             <P class="my-class"style="margin-top: -1mm;">LIBELLE PRODUIT: <span style="margin-left: 15.7mm;">{{libeleproduit}} </span></P>
