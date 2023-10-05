@@ -160,6 +160,7 @@
         const field = columns[i].fieldName;
         item[field] = row[i].formattedValue;
       }
+      console.log("Item : ", item)
       return item;
     });
 
