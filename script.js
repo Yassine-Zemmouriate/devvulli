@@ -190,7 +190,7 @@
       let itemClass = '';
       let itemContent = '';
 
-      switch (item.model) {
+      switch (item.model_or_man) {
         case 'Modèle AUC':
           itemClass = 'auchan';
           itemContent = `
