@@ -341,7 +341,7 @@
             itemClass = 'manual';
             itemContent = `<div class="subcontainer">
             <div class="informations">
-                <p class="reference">Référence : ${item.ref}</p>
+                <p class="reference">Référence : ${item.Reference}</p>
                 <p class="designation">${item.designation}</p>
                 <div style="display: flex; flex-direction: row;">
                     <p class="bn">BN: ${item.manuel_bn}</p>
@@ -357,7 +357,7 @@
     
         <div class="subcontainer">
             <div class="informations">
-                <p class="reference">Référence : ${item.ref}</p>
+                <p class="reference">Référence : ${item.Reference}</p>
                 <p class="designation">${item.designation}</p>
                 <div style="display: flex; flex-direction: row;">
                     <p class="bn">BN: ${item.manuel_bn}</p>
