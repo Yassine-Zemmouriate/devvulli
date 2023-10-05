@@ -37,9 +37,6 @@
           const manualBNParameter = parameters.find(p => p.name === "manuel_bn");
           const manualReferenceParameter = parameters.find(p => p.name === "manuel_ref");
 
-          let manualBNValue = ""
-          let manualReferenceValue = ""
-
           if (pageNumberParameter) {
             // Listen for changes to the Page Number parameter
             pageNumberParameter.addEventListener(tableau.TableauEventType.ParameterChanged, function (parameterChangedEvent) {
@@ -72,10 +69,7 @@
                     })
                     worksheet.getSummaryDataAsync().then((sumdata) => {
                       const items = convertDataToItems(sumdata, false);
-
-                      let paramsManual = [manualBNValue, manualReferenceValue]
               
-                      // Render all items initially
                       renderItems(items);
               
                     });
@@ -166,6 +160,7 @@
 
       return duplicatedItems;
     } else {
+
       return items;
     }
 
@@ -179,6 +174,8 @@
   function renderItems(items) {
     const container = document.createElement('div');
     container.className = 'container';
+
+    console.log("Items : ", items);
 
     items.forEach((item, index) => {
       const itemContainer = document.createElement('div');
