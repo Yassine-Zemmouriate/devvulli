@@ -98,24 +98,28 @@
 
           if (manualBNParameter) {
             manualBNParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
-              worksheet.getSummaryDataAsync().then((sumdata) => {
-                const items = convertDataToItems(sumdata, false);
-        
-                // Render all items initially
-                renderItems(items);
-        
-              });
+              parameterChangedEvent.getParameterAsync().then(() => {
+                worksheet.getSummaryDataAsync().then((sumdata) => {
+                  const items = convertDataToItems(sumdata, false);
+          
+                  // Render all items initially
+                  renderItems(items);
+          
+                });
+              })
             })};
 
           if (manualReferenceParameter) {
             manualReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
-              worksheet.getSummaryDataAsync().then((sumdata) => {
-                const items = convertDataToItems(sumdata, false);
-        
-                // Render all items initially
-                renderItems(items);
-        
-              });
+              parameterChangedEvent.getParameterAsync().then(() => {
+                worksheet.getSummaryDataAsync().then((sumdata) => {
+                  const items = convertDataToItems(sumdata, false);
+          
+                  // Render all items initially
+                  renderItems(items);
+          
+                });
+              })
             })
           };
         });
