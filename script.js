@@ -80,20 +80,11 @@
                       const items = convertDataToItems(sumdata, false);
                       console.log(`Worksheet : ${worksheet.name}`);
                       console.log(items);
+
+                      paramsManual = [manualBNValue, manualReferenceValue]
               
                       // Render all items initially
-                      renderItems(items, params=[manualBNValue, manualReferenceValue]);
-              
-                      // Listen for filter change
-                      unregisterHandlerFunctions.push(worksheet.addEventListener(tableau.TableauEventType.FilterChanged, function (filterEvent) {
-                        // Get filtered data
-                        worksheet.getSummaryDataAsync().then((sumdata) => {
-                          const items = convertDataToItems(sumdata, false);
-              
-                          // Render filtered items
-                          renderItems(items);
-                        });
-                      }));
+                      renderItems(items, paramsManual, true);
               
                     });
                 } else if (entryTypeValue === "Course") {
@@ -201,7 +192,7 @@
    * Renders the items to the my-extension.html template.
    * @param {Array} items - The items to render.
    */
-  function renderItems(items, params=[], exceptional="") {
+  function renderItems(items, params=[], exceptional=false) {
     const container = document.createElement('div');
     container.className = 'container';
 
