@@ -46,7 +46,6 @@
             pageNumberParameter.addEventListener(tableau.TableauEventType.ParameterChanged, function (parameterChangedEvent) {
               parameterChangedEvent.getParameterAsync().then((parameter) => {
                 const isDuplicated = parameter.currentValue.nativeValue;
-                const worksheet = tableau.extensions.dashboardContent.dashboard.worksheets[0];
                 worksheet.getSummaryDataAsync().then((sumdata) => {
                   const items = convertDataToItems(sumdata, isDuplicated);
   
@@ -153,6 +152,8 @@
    */
   function convertDataToItems(sumdata, isDuplicated) {
     const { columns, data } = sumdata;
+    console.log("Columns : ", columns);
+    console.log("Data : ", data);
     const items = data.map((row) => {
       const item = {};
       for (let i = 0; i < columns.length; i++) {
