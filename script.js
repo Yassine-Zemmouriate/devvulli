@@ -42,6 +42,9 @@
           const manualBNParameter = parameters.find(p => p.name === "manuel_bn");
           const manualReferenceParameter = parameters.find(p => p.name === "manuel_ref");
 
+          let manualBNValue = ""
+          let manualReferenceValue = ""
+
           if (pageNumberParameter) {
             // Listen for changes to the Page Number parameter
             pageNumberParameter.addEventListener(tableau.TableauEventType.ParameterChanged, function (parameterChangedEvent) {
@@ -79,7 +82,7 @@
                       console.log(items);
               
                       // Render all items initially
-                      renderItems(items);
+                      renderItems(items, params=[manualBNValue, manualReferenceValue]);
               
                       // Listen for filter change
                       unregisterHandlerFunctions.push(worksheet.addEventListener(tableau.TableauEventType.FilterChanged, function (filterEvent) {
@@ -132,14 +135,16 @@
           if (manualBNParameter) {
             manualBNParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
               parameterChangedEvent.getParameterAsync().then((parameter) => {
-                console.log("Pamraeter Manual BN : ", parameter.currentValue.nativeValue);
+                manualBNValue = parameter.currentValue.nativeValue
+                console.log("Pamraeter Manual BN : ", manualBNValue);
               })
             })};
 
           if (manualReferenceParameter) {
             manualReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
               parameterChangedEvent.getParameterAsync().then((parameter) => {
-                console.log("Pamraeter Manual Reference : ", parameter.currentValue.nativeValue);
+                manualReferenceValue = parameter.currentValue.nativeValue
+                console.log("Pamraeter Manual Reference : ", manualReferenceValue);
               })
             })
           };
@@ -196,12 +201,16 @@
    * Renders the items to the my-extension.html template.
    * @param {Array} items - The items to render.
    */
-  function renderItems(items, params=[]) {
+  function renderItems(items, params=[], exceptional="") {
     const container = document.createElement('div');
     container.className = 'container';
 
     items.forEach((item, index) => {
       const itemContainer = document.createElement('div');
+      if(exceptional) {
+        item.model = "Modèle MAN"
+        console.log("PARAMETERS : ", params);
+      }
       let itemClass = '';
       let itemContent = '';
 
@@ -356,10 +365,10 @@
             itemClass = 'manual';
             itemContent = `<div class="subcontainer">
             <div class="informations">
-                <p class="reference">Référence : ${item.Reference}</p>
+                <p class="reference">Référence : ${params[1]}</p>
                 <p class="designation">${item.designation}</p>
                 <div style="display: flex; flex-direction: row;">
-                    <p class="bn">BN: ${params.manuel_bn}</p>
+                    <p class="bn">BN: ${params[0]}</p>
                     <p class="pcb">PCB: ${item.pcb}</p>
                 </div>
             </div>
@@ -372,10 +381,10 @@
     
         <div class="subcontainer">
             <div class="informations">
-                <p class="reference">Référence : ${item.Reference}</p>
+                <p class="reference">Référence : ${params[1]}</p>
                 <p class="designation">${item.designation}</p>
                 <div style="display: flex; flex-direction: row;">
-                    <p class="bn">BN: ${params.manuel_bn}</p>
+                    <p class="bn">BN: ${params[0]}</p>
                     <p class="pcb">PCB: ${item.pcb}</p>
                 </div>
             </div>
