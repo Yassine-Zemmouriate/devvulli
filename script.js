@@ -15,10 +15,6 @@
       const dashboardObjects = dashboard.objects;
       const worksheets = dashboard.worksheets;
 
-      worksheets.forEach((worksheet) => {
-        console.log("The worksheet name is " + worksheet.name)
-      })
-
       let extensionName = ["manuel_ref", "manuel_bn"];
       
       let extensionVisibilityObject = {};
@@ -34,7 +30,6 @@
         .catch(error => console.error(error));
 
         let worksheet = worksheets[0];
-        console.log("[Flag] : Après l'initialisation du worksheet : "+ worksheet.name)
 
         dashboard.getParametersAsync().then((parameters) => {
           const entryTypeParameter = parameters.find(p => p.name === 'type_entree');
@@ -65,7 +60,6 @@
             entryTypeParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
               parameterChangedEvent.getParameterAsync().then((parameter) => {
                 const entryTypeValue = parameter.currentValue.nativeValue;
-                console.log("Parameter Entry Type", entryTypeValue)
                 if(entryTypeValue === "Manuel"){
                     worksheet = dashboard.worksheets[1];
                     dashboardObjects.forEach((object) => {
@@ -78,13 +72,11 @@
                     })
                     worksheet.getSummaryDataAsync().then((sumdata) => {
                       const items = convertDataToItems(sumdata, false);
-                      console.log(`Worksheet : ${worksheet.name}`);
-                      console.log(items);
 
                       let paramsManual = [manualBNValue, manualReferenceValue]
               
                       // Render all items initially
-                      renderItems(items, paramsManual, true);
+                      renderItems(items);
               
                     });
                 } else if (entryTypeValue === "Course") {
@@ -99,22 +91,9 @@
                     })
                     worksheet.getSummaryDataAsync().then((sumdata) => {
                       const items = convertDataToItems(sumdata, false);
-                      console.log(`Worksheet : ${worksheet.name}`);
-                      console.log(items);
               
                       // Render all items initially
                       renderItems(items);
-              
-                      // Listen for filter change
-                      unregisterHandlerFunctions.push(worksheet.addEventListener(tableau.TableauEventType.FilterChanged, function (filterEvent) {
-                        // Get filtered data
-                        worksheet.getSummaryDataAsync().then((sumdata) => {
-                          const items = convertDataToItems(sumdata, false);
-              
-                          // Render filtered items
-                          renderItems(items);
-                        });
-                      }));
               
                     });
                 }
@@ -125,18 +104,24 @@
 
           if (manualBNParameter) {
             manualBNParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
-              parameterChangedEvent.getParameterAsync().then((parameter) => {
-                manualBNValue = parameter.currentValue.nativeValue
-                console.log("Pamraeter Manual BN : ", manualBNValue);
-              })
+              worksheet.getSummaryDataAsync().then((sumdata) => {
+                const items = convertDataToItems(sumdata, false);
+        
+                // Render all items initially
+                renderItems(items);
+        
+              });
             })};
 
           if (manualReferenceParameter) {
             manualReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
-              parameterChangedEvent.getParameterAsync().then((parameter) => {
-                manualReferenceValue = parameter.currentValue.nativeValue
-                console.log("Pamraeter Manual Reference : ", manualReferenceValue);
-              })
+              worksheet.getSummaryDataAsync().then((sumdata) => {
+                const items = convertDataToItems(sumdata, false);
+        
+                // Render all items initially
+                renderItems(items);
+        
+              });
             })
           };
         });
@@ -173,7 +158,6 @@
         const field = columns[i].fieldName;
         item[field] = row[i].formattedValue;
       }
-      console.log(item);
       return item;
     });
 
@@ -192,16 +176,12 @@
    * Renders the items to the my-extension.html template.
    * @param {Array} items - The items to render.
    */
-  function renderItems(items, params=[], exceptional=false) {
+  function renderItems(items) {
     const container = document.createElement('div');
     container.className = 'container';
 
     items.forEach((item, index) => {
       const itemContainer = document.createElement('div');
-      if(exceptional) {
-        item.model = "Modèle MAN"
-        console.log("PARAMETERS : ", params);
-      }
       let itemClass = '';
       let itemContent = '';
 
