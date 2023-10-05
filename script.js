@@ -81,7 +81,7 @@
                       console.log(`Worksheet : ${worksheet.name}`);
                       console.log(items);
 
-                      paramsManual = [manualBNValue, manualReferenceValue]
+                      let paramsManual = [manualBNValue, manualReferenceValue]
               
                       // Render all items initially
                       renderItems(items, paramsManual, true);
