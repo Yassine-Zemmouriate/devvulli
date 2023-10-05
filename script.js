@@ -15,6 +15,10 @@
       const dashboardObjects = dashboard.objects;
       const worksheets = dashboard.worksheets;
 
+      worksheets.forEach((worksheet) => {
+        console.log("WORKSHEET : ", worksheet.name);
+      })
+
       let extensionName = ["manuel_ref", "manuel_bn"];
       
       let extensionVisibilityObject = {};
@@ -98,34 +102,29 @@
 
           if (manualBNParameter) {
             manualBNParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
-                parameterChangedEvent.getParameterAsync().then(() => {
-                    // Ajouter un délai de 2 secondes avant d'appeler getSummaryDataAsync
-                    setTimeout(() => {
-                        worksheet.getSummaryDataAsync().then((sumdata) => {
-                          console.log("Timeout execute");
-                            const items = convertDataToItems(sumdata, false);
-                            renderItems(items);
-                        });
-                    }, 2000); // Délai de 2 secondes
-                });
-            });
-        }        
-
-        if (manualReferenceParameter) {
-          manualReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
               parameterChangedEvent.getParameterAsync().then(() => {
-                  // Ajouter un délai de 2 secondes avant d'appeler getSummaryDataAsync
-                  setTimeout(() => {
-                      worksheet.getSummaryDataAsync().then((sumdata) => {
-                        console.log("Timeout execute");
-                          const items = convertDataToItems(sumdata, false);
-                          renderItems(items);
-                      });
-                  }, 2000); // Délai de 2 secondes
-              });
-          });
-      }
-      
+                worksheet.getSummaryDataAsync().then((sumdata) => {
+                  const items = convertDataToItems(sumdata, false);
+          
+                  // Render all items initially
+                  renderItems(items);
+                });
+              })
+            })};
+
+          if (manualReferenceParameter) {
+            manualReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
+              parameterChangedEvent.getParameterAsync().then(() => {
+                worksheet.getSummaryDataAsync().then((sumdata) => {
+                  const items = convertDataToItems(sumdata, false);
+          
+                  // Render all items initially
+                  renderItems(items);
+          
+                });
+              })
+            })
+          };
         });
     });
   });
