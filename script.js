@@ -135,8 +135,7 @@
   function duplicateObjects(list) {
     return list.reduce((acc, obj) => {
 
-
-      const duplicatedObjects = Array.from({ length : obj.nb_colis < 1 ? 1 : obj.nb_colis}, () => ({
+      const duplicatedObjects = Array.from({ length : obj.nb_colis_or_man < 1 ? 1 : obj.nb_colis_or_man}, () => ({
         ...obj
       }));
 
@@ -342,10 +341,10 @@
             itemClass = 'manual';
             itemContent = `<div class="subcontainer">
             <div class="informations">
-                <p class="reference">Référence : ${params[1]}</p>
+                <p class="reference">Référence : ${item.ref}</p>
                 <p class="designation">${item.designation}</p>
                 <div style="display: flex; flex-direction: row;">
-                    <p class="bn">BN: ${params[0]}</p>
+                    <p class="bn">BN: ${item.manuel_bn}</p>
                     <p class="pcb">PCB: ${item.pcb}</p>
                 </div>
             </div>
@@ -358,10 +357,10 @@
     
         <div class="subcontainer">
             <div class="informations">
-                <p class="reference">Référence : ${params[1]}</p>
+                <p class="reference">Référence : ${item.ref}</p>
                 <p class="designation">${item.designation}</p>
                 <div style="display: flex; flex-direction: row;">
-                    <p class="bn">BN: ${params[0]}</p>
+                    <p class="bn">BN: ${item.manuel_bn}</p>
                     <p class="pcb">PCB: ${item.pcb}</p>
                 </div>
             </div>
