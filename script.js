@@ -59,7 +59,7 @@
                 const entryTypeValue = parameter.currentValue.nativeValue;
                 console.log("Parameter Entry Type", entryTypeValue)
                 if(entryTypeValue === "Manuel"){
-                    worksheet = dashboard.worksheets[1].activateAsync();
+                    worksheet = dashboard.worksheets[1];
                     dashboardObjects.forEach((object) => {
                       if(extensionName.includes(object.name)){
                         extensionVisibilityObject[object.id] = tableau.ZoneVisibilityType.Show;
@@ -69,7 +69,7 @@
                       console.log("Show Elements");
                     })
                 } else if (entryTypeValue === "Course") {
-                    worksheet = dashboard.worksheets[0].activateAsync();
+                    worksheet = dashboard.worksheets[0];
                     dashboardObjects.forEach((object) => {
                       if(extensionName.includes(object.name)){
                         extensionVisibilityObject[object.id] = tableau.ZoneVisibilityType.Hide
