@@ -13,6 +13,11 @@
       const dashboard = tableau.extensions.dashboardContent.dashboard;
       const container = document.getElementById('my-extension');
       const dashboardObjects = dashboard.objects;
+      const worksheets = dashboard.worksheets;
+
+      worksheets.forEach((worksheet) => {
+        console.log("The worksheet name is " + worksheet.name)
+      })
 
       let extensionName = ["manuel_ref", "manuel_bn"];
       
@@ -28,10 +33,10 @@
         })
         .catch(error => console.error(error));
 
-        const parameters = dashboard.getParametersAsync();
-        let worksheet = dashboard.worksheets[0];
+        let worksheet = worksheets[0];
+        console.log("[Flag] : Après l'initialisation du worksheet : "+ worksheet.name)
 
-        parameters.then((parameters) => {
+        dashboard.getParametersAsync().then((parameters) => {
           const entryTypeParameter = parameters.find(p => p.name === 'type_entree');
           const pageNumberParameter = parameters.find(p => p.name === "unique_ref");
           const manualBNParameter = parameters.find(p => p.name === "manuel_bn");
@@ -68,6 +73,26 @@
                     tableau.extensions.dashboardContent.dashboard.setZoneVisibilityAsync(extensionVisibilityObject).then(() => {
                       console.log("Show Elements");
                     })
+                    worksheet.getSummaryDataAsync().then((sumdata) => {
+                      const items = convertDataToItems(sumdata, false);
+                      console.log(`Worksheet : ${worksheet.name}`);
+                      console.log(items);
+              
+                      // Render all items initially
+                      renderItems(items);
+              
+                      // Listen for filter change
+                      unregisterHandlerFunctions.push(worksheet.addEventListener(tableau.TableauEventType.FilterChanged, function (filterEvent) {
+                        // Get filtered data
+                        worksheet.getSummaryDataAsync().then((sumdata) => {
+                          const items = convertDataToItems(sumdata, false);
+              
+                          // Render filtered items
+                          renderItems(items);
+                        });
+                      }));
+              
+                    });
                 } else if (entryTypeValue === "Course") {
                     worksheet = dashboard.worksheets[0];
                     dashboardObjects.forEach((object) => {
@@ -78,6 +103,26 @@
                     tableau.extensions.dashboardContent.dashboard.setZoneVisibilityAsync(extensionVisibilityObject).then(() => {
                       console.log("Hide Elements");
                     })
+                    worksheet.getSummaryDataAsync().then((sumdata) => {
+                      const items = convertDataToItems(sumdata, false);
+                      console.log(`Worksheet : ${worksheet.name}`);
+                      console.log(items);
+              
+                      // Render all items initially
+                      renderItems(items);
+              
+                      // Listen for filter change
+                      unregisterHandlerFunctions.push(worksheet.addEventListener(tableau.TableauEventType.FilterChanged, function (filterEvent) {
+                        // Get filtered data
+                        worksheet.getSummaryDataAsync().then((sumdata) => {
+                          const items = convertDataToItems(sumdata, false);
+              
+                          // Render filtered items
+                          renderItems(items);
+                        });
+                      }));
+              
+                    });
                 }
                 
               })
@@ -99,29 +144,6 @@
             })
           };
         });
-
-      // Get data from worksheet
-
-      worksheet.getSummaryDataAsync().then((sumdata) => {
-        const items = convertDataToItems(sumdata, false);
-        console.log(`Worksheet : ${worksheet.name}`);
-        console.log(items);
-
-        // Render all items initially
-        renderItems(items);
-
-        // Listen for filter change
-        unregisterHandlerFunctions.push(worksheet.addEventListener(tableau.TableauEventType.FilterChanged, function (filterEvent) {
-          // Get filtered data
-          worksheet.getSummaryDataAsync().then((sumdata) => {
-            const items = convertDataToItems(sumdata, false);
-
-            // Render filtered items
-            renderItems(items);
-          });
-        }));
-
-      });
     });
   });
 
