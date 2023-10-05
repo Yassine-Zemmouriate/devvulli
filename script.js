@@ -71,7 +71,7 @@
                       console.log("Show Elements");
                     })
                     worksheet.getSummaryDataAsync().then((sumdata) => {
-                      const items = convertDataToItems(sumdata, false);
+                      const items = convertDataToItems(sumdata, true);
               
                       renderItems(items);
               
@@ -87,7 +87,7 @@
                       console.log("Hide Elements");
                     })
                     worksheet.getSummaryDataAsync().then((sumdata) => {
-                      const items = convertDataToItems(sumdata, false);
+                      const items = convertDataToItems(sumdata, true);
               
                       // Render all items initially
                       renderItems(items);
@@ -103,7 +103,7 @@
             manualBNParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
               parameterChangedEvent.getParameterAsync().then(() => {
                 worksheet.getSummaryDataAsync().then((sumdata) => {
-                  const items = convertDataToItems(sumdata, false);
+                  const items = convertDataToItems(sumdata, true);
           
                   // Render all items initially
                   renderItems(items);
@@ -115,7 +115,7 @@
             manualReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
               parameterChangedEvent.getParameterAsync().then(() => {
                 worksheet.getSummaryDataAsync().then((sumdata) => {
-                  const items = convertDataToItems(sumdata, false);
+                  const items = convertDataToItems(sumdata, true);
           
                   // Render all items initially
                   renderItems(items);
