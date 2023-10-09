@@ -300,41 +300,7 @@
           </div>
           `;
           break;
-        case "Modèle SMAL":
-            itemClass = 'SMALLABLE';
-            itemContent = `
-            <p id="smallable"> smallable </p>
-            <p style="font-weight: 700;font-size: larger; ">COLIS n° <span style="margin-left:20px;">2</span><span style="margin-left:20px;">Sur <span style="margin-left:10px;">2</span>
-            </p>  
-            `;
-            break;
-        case "Modèle PROD":
-              itemClass = 'PRODUCTION';
-              itemContent = `
-              <div id="container">
-               <div id="right">
-                <div>Réference: 130979</div>
-                <div>BN</div>
-               <div>PCB</div>
-               <div class="barcode">
-                <img style="height: 34.7mm; margin-left: 8.4mm;"
-               src="https://barcode.tec-it.com/barcode.ashx?data=13056562003199&code=Code25IL&multiplebarcodes=true&translate-esc=true&unit=Px&imagetype=Jpg&modulewidth=0.20&dpi=300&unit=Mm"
-               alt="Code-barres">
-               </div>
-               </div>
-               <div id="left">
-               <div>Réference: 130979</div>
-               <div>BN</div>
-               <div>PCB</div>
-               <div class="barcode">
-               <img style="height: 34.7mm; margin-left: 8.4mm;"
-               src="https://barcode.tec-it.com/barcode.ashx?data=13056562003199&code=Code25IL&multiplebarcodes=true&translate-esc=true&unit=Px&imagetype=Jpg&modulewidth=0.20&dpi=300&unit=Mm"
-               alt="Code-barres">
-               </div>
-               </div>
-                </div>
-              `;
-              break;
+        
         case "Modèle FNA":
           itemClass = 'fnac';
           itemContent = `
@@ -405,6 +371,104 @@
             </div>
         </div>`;
         break;
+        case "Modèle SMAL":
+          itemClass = 'SMALLABLE';
+          itemContent = `
+          <p id="smallable"> smallable </p>
+          <p style="font-weight: 700;font-size: larger; ">COLIS n° <span style="margin-left:20px;">2</span><span style="margin-left:20px;">Sur <span style="margin-left:10px;">2</span>
+          </p>  
+          `;
+          break;
+      case "Modèle PROD":
+            itemClass = 'PRODUCTION';
+            itemContent = `
+            <div id="container">
+              <div id="right">
+               <div>Réference: 130979</div>
+               <div>BN</div>
+             <div>PCB</div>
+             <div class="barcode">
+              <img style="height: 34.7mm; margin-left: 8.4mm;"
+             src="https://barcode.tec-it.com/barcode.ashx?data=13056562003199&code=Code25IL&multiplebarcodes=true&translate-esc=true&unit=Px&imagetype=Jpg&modulewidth=0.20&dpi=300&unit=Mm"
+             alt="Code-barres">
+             </div>
+             </div>
+             <div id="left">
+             <div>Réference: 130979</div>
+             <div>BN</div>
+             <div>PCB</div>
+             <div class="barcode">
+             <img style="height: 34.7mm; margin-left: 8.4mm;"
+             src="https://barcode.tec-it.com/barcode.ashx?data=13056562003199&code=Code25IL&multiplebarcodes=true&translate-esc=true&unit=Px&imagetype=Jpg&modulewidth=0.20&dpi=300&unit=Mm"
+             alt="Code-barres">
+             </div>
+             </div>
+              </div>
+            `;
+            break;
+      case "Modèle SYS":
+              itemClass = 'SYSTEMEU';
+              itemContent = `
+              <div id="étiquettesystem" style="background-color: lightblue;">
+ 
+              <div id="premièrecol">
+                  <p><h7>Nom fournisseur</h7></p>
+                  <p>VULLI </p>
+                  <p>Z.I.</p>
+                  <p>74150 RUMILLY</p>
+      
+              </div>
+              
+              <div class="classborder"  >
+                  
+                  <p>SYSTEM U </p>
+                  <p>Vendèopôle-Haut bocage</p>
+                  <p>Vendéen</p>
+                  <p>Les champs de Ray </p>
+                  <p>85500 LES HERBIERS</p>
+              </div>
+                 
+              
+         
+          
+              <div id="firstcol">
+                  <p>désign :<span style="font-size: x-large;margin-left: 10px;"><sup>Désignation</sup></span></p>
+                  <p>Réf.fournisseur<span style="font-size: x-large;margin-left: 20px;">Réference vulli</span></p>
+                  <p>PCB<span style="margin-left: 8px;font-size: large;">123</span><span style="margin-left: 90px;">SPCB</span></p>
+                  <div style="line-height : 80px;">
+      
+                  <div style="display: flex;flex-direction: row;">
+                     
+                      <div><p style="transform: rotate(270deg);">EAN carton</p></div>
+                  <div style="margin-left: 50px;">
+                      <img src="https://barcode.tec-it.com/barcode.ashx?data=&multiplebarcodes=true&translate-esc=true" alt="Code-barres">
+                  </div>
+                  </div>
+              
+                  </div>
+      
+              </div>
+              <div id="l2col2" style="margin-right: 1090px;">
+                  <p style="border-bottom:4px solid black;">colis n° 1<span style="margin-left: 40px;">sur</span><span style="margin-left: 6px;font-size: larger;">31</span></p>
+                  
+                  <p style="border-bottom:4px solid black;">Numéro présentation<span style="margin-left: 12px;font-size: larger;">numero de pr </span></p>
+                  <div style="line-height : 50px;">
+                  <p >Numéro de bon de commande:</p>
+                  <p style="border-bottom:4px solid black;">Code produit national<span style="margin-left: 12px;font-size: larger;">Code Produi</span></p>
+              </div>
+                  <p>Compostition du colis<span style="margin-left: 12px;font-size: larger;">TU</span></p>
+                  <p>Notion allotie<span style="margin-left: 12px;">AL</span></p>
+                  
+      
+      
+      
+              
+          </div>
+          
+       </div>  
+      
+              `;
+              break; 
       }
 
       itemContainer.className = `${itemClass} item`;
