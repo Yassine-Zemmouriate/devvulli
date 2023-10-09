@@ -300,7 +300,41 @@
           </div>
           `;
           break;
-
+        case "Modèle SMAL":
+            itemClass = 'SMALLABLE';
+            itemContent = `
+            <p id="smallable"> smallable </p>
+            <p style="font-weight: 700;font-size: larger; ">COLIS n° <span style="margin-left:20px;">2</span><span style="margin-left:20px;">Sur <span style="margin-left:10px;">2</span>
+            </p>  
+            `;
+            break;
+        case "Modèle PROD":
+              itemClass = 'PRODUCTION';
+              itemContent = `
+              <div id="container">
+               <div id="right">
+                <div>Réference: 130979</div>
+                <div>BN</div>
+               <div>PCB</div>
+               <div class="barcode">
+                <img style="height: 34.7mm; margin-left: 8.4mm;"
+               src="https://barcode.tec-it.com/barcode.ashx?data=13056562003199&code=Code25IL&multiplebarcodes=true&translate-esc=true&unit=Px&imagetype=Jpg&modulewidth=0.20&dpi=300&unit=Mm"
+               alt="Code-barres">
+               </div>
+               </div>
+               <div id="left">
+               <div>Réference: 130979</div>
+               <div>BN</div>
+               <div>PCB</div>
+               <div class="barcode">
+               <img style="height: 34.7mm; margin-left: 8.4mm;"
+               src="https://barcode.tec-it.com/barcode.ashx?data=13056562003199&code=Code25IL&multiplebarcodes=true&translate-esc=true&unit=Px&imagetype=Jpg&modulewidth=0.20&dpi=300&unit=Mm"
+               alt="Code-barres">
+               </div>
+               </div>
+                </div>
+              `;
+              break;
         case "Modèle FNA":
           itemClass = 'fnac';
           itemContent = `
