@@ -56,8 +56,8 @@
 .item.orchestra {
   display: flex;
   flex-direction: row;
-  width: 148mm;
-  height: 105.1mm;
+  width: 150mm;
+  height: 100mm;
   border-width: 1px;
   border-style: solid;
   border-radius: 15px;
@@ -68,7 +68,7 @@
 
 
 #barcode-orchestra {
-  margin-top: 10.4mm;
+  margin-top: 5.4mm;
   margin-left: 9.4mm;
   width: 44.7mm; 
   height: 34.7mm;
@@ -295,4 +295,123 @@
   margin-left: 35.5mm;
 }
 
+.item.smallable .myclass{
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.item.smallable .mysecondclass{
+  text-transform: capitalize;
+  font-weight: 700;
+}
+.item.smallable #smallable{
+  text-transform: uppercase; 
+  font-weight: 700;width: 10%;
+  font-size: larger;
+ text-align: center ;
+}
+.item.verbaudet #exp-desti {
+  display: flex;
+  flex-direction: row;
+  font-weight: bold;
+  border-bottom: 3px solid black;
+
+}
+
+.item.verbaudet #etiquetteverbaudet {
+  font-weight: bolder;
+
+}
+.item.verbaudet #contttwo {
+  display: flex;
+  flex-direction: row;
+  font-weight: bolder;
+
+}
+
+.item.verbaudet #num-colis {
+  line-height: 40px;
+  border-right: 2px solid black;
+}
+.item.verbaudet #ref-refproduit {
+  min-width: 2px;
+  overflow: visible;
+  line-height: 60px;
+}
+
+.item.verbaudet #date-envoi {
+  border-left: 2px solid black;
+}
+.item.production #container {
+  display: flex;
+  flex-direction: row;
+  width : 210.8mm;
+  border: black solid 1px;
+  border-radius : 5px;
+}
+.item.production #right {
+  flex : 1;
+}
+
+.item.production  #left {
+  flex : 1;
+}
+.item.systemu  #etiquettesystem{
+  font-weight:bolder;
+}
+.item.systemu  .classborder{
+  border-left: 4px solid black;
+  margin-left: 81.5mm;
+}
+.item.systemu #l2col2{
+  border-left: 4px solid black;
+  margin-left: -3.2mm;
+  width: 55%;
+}
+.item.systemu  #firstrow{
+  display: flex; flex-direction: row;
+}
+
+.item.systemu #secondrow{
+  display: flex; flex-direction: row;border-top: 4px solid black;
+}
+.item.adresse #vulli-logo {
+  text-align: left;
+  align-items: center;
+  object-fit: contain;
+  margin-right: 10px;
+}
+.item.adresse  #partie-encadreeadresse {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: 100px;
+  width: 900px;
+  width: 420px;
+  height: 120px;
+  
+}
+.item.adresse  #etiquetteadresse {
+  width: 420px;
+}
+.item.adresse #informations {
+  line-height: 2px;
+}
+.item.galerielafayette #Vulli_logo{ 
+  text-align: left;
+}
+.item.galerielafayette #partieencadree{ 
+  padding-left: 50px;
+ 
+  display: flex;
+  flex-direction: row;
+}
+.item.galerielafayette #etiquettegalerielafayette{
+  width: 40%;
+}
+.item.galerielafayette #informationss{
+  margin-top: 40px;
+
+}
 }

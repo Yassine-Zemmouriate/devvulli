@@ -8,16 +8,11 @@
   // Use the jQuery document ready signal to know when everything has been initialized
   $(document).ready(function () {
 
+    console.log("Test changement de déploiement")
+
     tableau.extensions.initializeAsync().then(function () {
 
-      const dashboard = tableau.extensions.dashboardContent.dashboard;
       const container = document.getElementById('my-extension');
-      const dashboardObjects = dashboard.objects;
-      const worksheets = dashboard.worksheets;
-
-      worksheets.forEach((worksheet) => {
-        console.log("WORKSHEET : ", worksheet.name);
-      })
 
       let extensionName = ["manuel_ref", "manuel_bn"];
       
@@ -33,13 +28,32 @@
         })
         .catch(error => console.error(error));
 
-        let worksheet = worksheets[0];
+        let worksheet = tableau.extensions.dashboardContent.dashboard.worksheets[0];
 
-        dashboard.getParametersAsync().then((parameters) => {
+        unregisterHandlerFunctions.push(worksheet.addEventListener(tableau.TableauEventType.FilterChanged, function (filterEvent) {
+          // Get filtered data
+          worksheet.getSummaryDataAsync().then((sumdata) => {
+            const items = convertDataToItems(sumdata, false);
+
+            // Render filtered items
+            renderItems(items);
+          });
+        }));
+
+        tableau.extensions.dashboardContent.dashboard.getParametersAsync().then((parameters) => {
+          console.log("Afficher tout les paramètres : ", parameters);
           const entryTypeParameter = parameters.find(p => p.name === 'type_entree');
           const pageNumberParameter = parameters.find(p => p.name === "unique_ref");
           const manualBNParameter = parameters.find(p => p.name === "manuel_bn");
           const manualReferenceParameter = parameters.find(p => p.name === "manuel_ref");
+
+          tableau.extensions.dashboardContent.dashboard.worksheets[0].getSummaryDataAsync().then((sumdata) => {
+            console.log("=> Initialisation de l'affichage");
+            const items = convertDataToItems(sumdata, false);
+  
+            // Render filtered items
+            renderItems(items);
+          });
 
           if (pageNumberParameter) {
             // Listen for changes to the Page Number parameter
@@ -47,6 +61,7 @@
               parameterChangedEvent.getParameterAsync().then((parameter) => {
                 const isDuplicated = parameter.currentValue.nativeValue;
                 worksheet.getSummaryDataAsync().then((sumdata) => {
+                  console.log("=> Récupération 'Voir étiquette unique'");
                   const items = convertDataToItems(sumdata, isDuplicated);
   
                   // Render filtered items
@@ -61,8 +76,8 @@
               parameterChangedEvent.getParameterAsync().then((parameter) => {
                 const entryTypeValue = parameter.currentValue.nativeValue;
                 if(entryTypeValue === "Manuel"){
-                    worksheet = dashboard.worksheets[1];
-                    dashboardObjects.forEach((object) => {
+                    worksheet = tableau.extensions.dashboardContent.dashboard.worksheets[1];
+                    tableau.extensions.dashboardContent.dashboard.objects.forEach((object) => {
                       if(extensionName.includes(object.name)){
                         extensionVisibilityObject[object.id] = tableau.ZoneVisibilityType.Show;
                       }
@@ -77,8 +92,8 @@
               
                     });
                 } else if (entryTypeValue === "Course") {
-                    worksheet = dashboard.worksheets[0];
-                    dashboardObjects.forEach((object) => {
+                    worksheet = tableau.extensions.dashboardContent.dashboard.worksheets[0];
+                    tableau.extensions.dashboardContent.dashboard.objects.forEach((object) => {
                       if(extensionName.includes(object.name)){
                         extensionVisibilityObject[object.id] = tableau.ZoneVisibilityType.Hide
                       }
@@ -287,20 +302,20 @@
           <div id="templatefnaceveil" >
             <p style="font-size: 24.2pt; font-weight: normal; font-family: Arial, sans-serif;margin-top: 6mm; margin-left: 5.3mm;  ">EVEIL ET JEUX </p>
             <p class="my-class" style="margin-top:-8mm;">France</p>
-            <P class="my-class" style="margin-top: 4mm;">NOM DU FOURNISSEUR :<span  style="margin-left: 6mm;">{{fournisseur}}</span></P>
-            <p class="my-class" style="margin-top: 4mm;">reference fournisseur : <span style="margin-left:22.5mm;">${item.tiers_ref}</span></p>
-            <P class="my-class" style="margin-top: -5mm;">reference fnac eveil & jeux  <span style="margin-left:17.3mm;">123456</span></P>
-            <P class="my-class" style="margin-top: -1mm;">ean  :<span style="margin-left:6.7mm; ">{{ean}}</span></P>
-            <P class="my-class"style="margin-top: -1mm;">LIBELLE PRODUIT: <span style="margin-left: 15.7mm;">{{libeleproduit}} </span></P>
-            <p class="my-class" style="margin-top: -1mm;">nombre de pieces   <span style="margin-left:18.3mm;">{{nombredepieces}}</span></p>
-            <P class="my-class" style="margin-left: 16.9mm; margin-top: -1mm;">poids du carton: <span style="margin-left:7mm;">{{poidsducarton}}</span></P>
-            <p class="my-class" style="margin-left: 11mm; margin-top: -1mm;">dimension du carton:      <SPAN style="margin-left:13.3mm;">{{dimcarton}}</SPAN></p>
-            <P class="my-class" style="margin-top: -4mm;">commande n°:     <span style="margin-left:16.6mm;">{{commandenum}}</span></P>
-            <p class="my-class" style="min-width: max-content;">CARTON N° :     <span  style="margin-left: 13mm;">${index + 1}</span><span style="margin-left: 9.7mm;">partie de :</span> <span style="margin-left: 6mm;">${item.nb_colis_bp}</span> <span style="margin-left: 8.7mm;">colis</span> </p>
+            <P class="my-class" style="margin-top: 4mm;">NOM DU FOURNISSEUR :<span  style="margin-left: 6mm;">${item.ref}</span></P>
+            <p class="my-class" style="margin-top: 3mm;">reference fournisseur : <span style="margin-left:22.5mm;">${item.tiers_ref}</span></p>
+            <P class="my-class" style="margin-top: -5mm;">reference fnac eveil & jeux  <span style="margin-left:17.3mm;">xxxxxxxx</span></P>
+            <P class="my-class" style="margin-top: -1mm;">ean  :<span style="margin-left:6.7mm; ">${item.EAN13}</span></P>
+            <P class="my-class"style="margin-top: -1mm;">LIBELLE PRODUIT: <span style="margin-left: 15.7mm;">${item.designation} </span></P>
+            <p class="my-class" style="margin-top: -1mm;">nombre de pieces   <span style="margin-left:18.3mm;">${item.nb_colis_bp}</span></p>
+            <P class="my-class" style="margin-left: 4.899999999999999mmmm; margin-top: -1mm;">poids du carton: <span style="margin-left:7mm;">${item.weight}</span></P>
+            <p class="my-class" style="margin-left: 5mm; margin-top: -3mm;">dimension du carton:      <SPAN style="margin-left:13.3mm;">xxxxx</SPAN></p>
+            <P class="my-class" style="margin-top: -4mm;">commande n°:     <span style="margin-left:16.6mm;">${item.pi_no_tiers}</span></P>
+            <p class="my-class" style="min-width: max-content;margin-top: -3mm;">CARTON N° :     <span  style="margin-left: 13mm;">${index + 1}</span><span style="margin-left: 9.7mm;">partie de :</span> <span style="margin-left: 6mm;">${item.nb_colis_bp}</span> <span style="margin-left: 8.7mm;">colis</span> </p>
           </div>
           `;
           break;
-
+        
         case "Modèle FNA":
           itemClass = 'fnac';
           itemContent = `
@@ -371,6 +386,242 @@
             </div>
         </div>`;
         break;
+        case "Modèle SMAL":
+          itemClass = 'smallable';
+          itemContent = `
+          <p id="smallable"> smallable </p>
+          <p style="font-weight: 700;font-size: larger; ">COLIS n° <span style="margin-left:20px;">${index + 1}</span><span style="margin-left:20px;">Sur <span style="margin-left:10px;">${index + 1}/${item.nb_colis_bp}</span>
+          </p>  
+          `;
+          break;
+        case "Modèle VERB":
+            itemClass = 'verbaudet';
+            itemContent = `
+            <div id="etiquetteverbaudet">
+            <div id="exp-desti">
+                <div style="margin-left: 30px;">
+                    <div style="line-height : 15px;">
+                        <p >Expéditeur:</p>
+                        <p>VULLI SAS</p>
+                    </div>
+                    <div style="line-height : 5px;">
+                        <p>1 avenue des alpes</p>
+                        <p>74150 RUMILLY</p>
+                    </div>
+                </div>
+                <div style="margin-left: 100px; border-left: 2px solid black;">
+                    <div style="line-height : 15px;">
+                        <p style="margin-left: 70px;">Destinataire:</p>
+    
+                        <p style="margin-left: 70px;">VERTBAUDET</p>
+                    </div>
+                    <div style="line-height : 5px;">
+                        <p style="margin-left: 70px;">12/14 Avenue industrielle</p>
+                        <p style="margin-left: 70px;">59520 MARQUETTE LEZ</p>
+                        <p style="margin-left: 70px;">LILLE</p>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+        <div id="contttwo">
+    
+            <div id="num-colis">
+                <p>${index + 1}</p>
+    
+                <p style="align-content: center;margin-left: 50px;">1</p>
+    
+                <p>${item.nb_colis_bp}</p>
+                <p style="align-content: center;margin-left: 50px;">1</p>
+    
+    
+    
+    
+            </div>
+    
+            <div id="ref-refproduit">
+                <p style="font-size:x-large;">Réf . reference produit  <span style="margin-left: 10px">${item.ref}</span></p>
+                <div id="barcode" style="display: flex; align-items: center;">
+                    <img src="https://barcode.tec-it.com/barcode.ashx?data=${item.barcode1}&code=${item.EAN13}&translate-esc=true&imagetype=Svg&rotation=0" alt="Code-barres">
+                </div>
+    
+            </div>
+    
+            <div id="date-envoi">
+                <p style="margin-left: 17px;">Date d'envoie </p>
+    
+                <p style="align-content: center;margin-left: 17px;">27/03/2019</p>
+                <div style="line-height:70px";>
+                <hr style="color: black;">
+            
+               
+                <p style="margin-left: 17px;">${item.pi_no_tiers} Pièces</p>
+    
+            </div>
+            </div>
+    
+    
+    
+        </div>
+    
+        </div>
+        </div>
+            `;
+            break;
+      case "Modèle PROD":
+            itemClass = 'production';
+            itemContent = `
+            <div id="container">
+              <div id="right">
+               <div>Réference: ${item.tiers_ref}</div>
+               <div>${item.manuel_bn}</div>
+             <div>${item.pcb}</div>
+             <div class="barcode">
+              <img style="height: 34.7mm; margin-left: 8.4mm;"
+             src="https://barcode.tec-it.com/barcode.ashx?data=${item.barcode1}&code=${item.barcode1_type}&multiplebarcodes=true&translate-esc=true&unit=Px&imagetype=Jpg&modulewidth=0.20&dpi=300&unit=Mm"
+             alt="Code-barres">
+             </div>
+             </div>
+             <div id="left">
+             <div>Réference: ${item.tiers_ref}</div>
+             <div>${item.manuel_bn}</div>
+             <div>${item.pcb}</div>
+             <div class="barcode">
+             <img style="height: 34.7mm; margin-left: 8.4mm;"
+             src="https://barcode.tec-it.com/barcode.ashx?data=${item.barcode1}&code=${item.barcode1_type}&multiplebarcodes=true&translate-esc=true&unit=Px&imagetype=Jpg&modulewidth=0.20&dpi=300&unit=Mm"
+             alt="Code-barres">
+             </div>
+             </div>
+              </div>
+            `;
+            break;
+      case "Modèle SYS":
+              itemClass = 'systemu';
+              itemContent = `
+              <div id="etiquettesystem" >
+              <div id="firstrow">
+                   <div >
+                       <p><h7>Nom fournisseur</h7></p>
+                       <p>VULLI </p>
+                       <p>Z.I.</p>
+                       <p>74150 RUMILLY</p>
+           
+                   </div>
+                   
+                   <div class="classborder"  >
+                       <div style="margin-left: 5mm;">
+                       <p>SYSTEM U </p>
+                       <p>Vendèopôle-Haut bocage</p>
+                       <p>Vendéen</p>
+                       <p>Les champs de Ray </p>
+                       <p>85500 LES HERBIERS</p>
+                   </div>
+               </div>
+                   
+               </div>
+               <div id="secondrow">
+                   <div id="firstcol">
+                       <p >désign :<span style="font-size: x-large;margin-left: 10px;"><sup>${item.designation}</sup></span></p>
+                       <p>Réf.fournisseur<span style="font-size: x-large;margin-left: 20px;">${item.Reference}</span></p>
+                       <p>PCB<span style="margin-left: 8px;font-size: large;">${item.pcb}</span><span style="margin-left: 90px;">${item.spcb}</span></p>
+                       <div style="line-height : 80px;">
+           
+                       <div style="display: flex;flex-direction: row;">
+                          
+                           <div><p style="transform: rotate(270deg);">${item.EAN13}</p></div>
+                       <div style="margin-right: 50px;border: 4px solid black;">
+                           <img src="https://barcode.tec-it.com/barcode.ashx?data=&multiplebarcodes=true&translate-esc=true" alt="Code-barres">
+                       </div>
+                       </div>
+                   
+                       </div>
+           
+                   </div>
+                   <div id="l2col2" >
+                       <div style="border-bottom:4px solid black;">
+                       
+                       <p style="margin-left: 5mm;">colis n° ${index + 1}<span style="margin-left: 40px;">sur</span><span style="margin-left: 6px;font-size: larger;">31</span></p>
+                   </div>
+                   <div style="border-bottom:4px solid black;"> 
+                       <p style="margin-left: 5mm;">Numéro présentation<span style="margin-left: 12px;font-size: larger;">numero de pr </span></p>
+                   </div>
+                       <div style="line-height : 50px;border-bottom:4px solid;">
+                       <p style="margin-left: 5mm;">Numéro de bon de commande:</p>
+                       <p  style="margin-left: 5mm;">Code produit national<span style="margin-left: 12px;font-size: larger;">Code Produi</span></p>
+                   </div>
+                       <p  style="margin-left: 5mm;">Compostition du colis<span style="margin-left: 12px;font-size: larger;">TU</span></p>
+                       <p  style="margin-left: 5mm;">Notion allotie<span style="margin-left: 12px;">AL</span></p>
+                       
+           
+           
+                       
+                   
+               </div>
+           </div>
+            </div>  
+      
+              `;
+              break; 
+      case "Modèle ADRESSE":
+                itemClass = 'adresse';
+                itemContent = `
+                <div id="etiquetteadresse">
+      
+                <div id="partie-encadreeadresse">
+                    <img id="vulli-logo" src="./images/Vulli_logo-modified.jpg" alt="Code-barres"
+                        style="height : 120px;align-items: center;" />
+                    <div id="informations" >
+                        <p>VULLI S.A</p>
+                        <p>Z.I.Des Granges</p>
+                        <p>74150 RUMILLY FRANCE</p>
+                        <p>Tél. +33(0)450010620</p>
+                    </div>
+            </div></div>
+                
+        
+                <div style="line-height : 10px; margin-left: 42px;font-family: Arial, sans-serif;font-size: large;">
+                    <p>Sophie Giraf</p>
+                    <p>C/O Precious Toy ApS</p>
+                    <p>Havremarken 4, Hal V</p>
+                </div>
+                    <div style= "line-height : 10px; margin-left: 42px;margin-top: 40px;font-family: Arial, sans-serif;font-size: large;">
+                  <p>3650 <span style="margin-left: 20px;">0elstykke</span>  </p>
+                    <p>DANEMARK</p>
+                </div>
+                <div style="margin-left: 478px;margin-top: -28px;"><b>1/1</b></div>
+        
+            </div>
+                `;
+                break; 
+      case "Modèle GALLAFAY":
+                  itemClass = 'galerielafayette';
+                  itemContent = `
+                  <div id="etiquettegalerielafayette">
+                  <div style=" border: 3px solid black;margin-left: 100px;">
+                  <div id="partieencadree">
+                      <div id="Vulli_logo">
+                          <img src=".images/Vulli_logo-modified.jpg" alt="Code-barres">
+                          </div>
+                      <div id="informationss" >
+                          <p>VULLI S.A</p>
+                          <p>Z.I.Des Granges</p>
+                          <p style="min-width: 10px;">74150 RUMILLY FRANCE</p>
+                          <p>Tél. +33(0)450010620</p>
+          
+                      </div>
+                  </div>
+          
+                  </div>
+                  <div style="line-height : 70px;font-weight: bolder;">
+                  <p>GALERIES LAFAYETTE</p>
+                  <p>REF : ${item.ref}</p>
+          
+              </div>
+              <div style="text-align: right;"><b>3/3</b></div>
+          
+              </div>
+                  `;
+                  break;       
       }
 
       itemContainer.className = `${itemClass} item`;
