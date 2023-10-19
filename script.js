@@ -8,7 +8,12 @@
   // Use the jQuery document ready signal to know when everything has been initialized
   $(document).ready(function () {
 
-    console.log("Test changement de déploiement")
+    console.log("Test changement de déploiement Adresse");
+
+    const firstAdresseParameterName = "";
+    const secondAdresseParameterName = "";
+    const thirdAdresseParameterName = "";
+    const fourthAdresseParameterName = "";
 
     tableau.extensions.initializeAsync().then(function () {
 
@@ -30,6 +35,7 @@
 
         let worksheet = tableau.extensions.dashboardContent.dashboard.worksheets[0];
 
+        // Liste des filtres dans un dashboard
         unregisterHandlerFunctions.push(worksheet.addEventListener(tableau.TableauEventType.FilterChanged, function (filterEvent) {
           // Get filtered data
           worksheet.getSummaryDataAsync().then((sumdata) => {
@@ -42,10 +48,17 @@
 
         tableau.extensions.dashboardContent.dashboard.getParametersAsync().then((parameters) => {
           console.log("Afficher tout les paramètres : ", parameters);
+
+          // Liste des paramètres dans un dashboard
           const entryTypeParameter = parameters.find(p => p.name === 'type_entree');
           const pageNumberParameter = parameters.find(p => p.name === "unique_ref");
           const manualBNParameter = parameters.find(p => p.name === "manuel_bn");
           const manualReferenceParameter = parameters.find(p => p.name === "manuel_ref");
+          const firstAdresseReferenceParameter = parameters.find(p => p.name === firstAdresseParameterName);
+          const secondAdresseReferenceParameter = parameters.find(p => p.name === secondAdresseParameterName);
+          const thirdAdresseReferenceParameter = parameters.find(p => p.name === thirdAdresseParameterName);
+          const fourthAdresseReferenceParameter = parameters.find(p => p.name === fourthAdresseParameterName);
+
 
           tableau.extensions.dashboardContent.dashboard.worksheets[0].getSummaryDataAsync().then((sumdata) => {
             console.log("=> Initialisation de l'affichage");
@@ -75,7 +88,7 @@
             entryTypeParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
               parameterChangedEvent.getParameterAsync().then((parameter) => {
                 const entryTypeValue = parameter.currentValue.nativeValue;
-                if(entryTypeValue === "Manuel"){
+                if(entryTypeValue in ["Manual", "Adresse"]) {
                     worksheet = tableau.extensions.dashboardContent.dashboard.worksheets[1];
                     tableau.extensions.dashboardContent.dashboard.objects.forEach((object) => {
                       if(extensionName.includes(object.name)){
@@ -128,6 +141,62 @@
 
           if (manualReferenceParameter) {
             manualReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
+              parameterChangedEvent.getParameterAsync().then(() => {
+                worksheet.getSummaryDataAsync().then((sumdata) => {
+                  const items = convertDataToItems(sumdata, true);
+          
+                  // Render all items initially
+                  renderItems(items);
+          
+                });
+              })
+            })
+          };
+
+          if (firstAdresseReferenceParameter) {
+            firstAdresseReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
+              parameterChangedEvent.getParameterAsync().then(() => {
+                worksheet.getSummaryDataAsync().then((sumdata) => {
+                  const items = convertDataToItems(sumdata, true);
+          
+                  // Render all items initially
+                  renderItems(items);
+          
+                });
+              })
+            })
+          };
+
+          if (secondAdresseReferenceParameter) {
+            secondAdresseReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
+              parameterChangedEvent.getParameterAsync().then(() => {
+                worksheet.getSummaryDataAsync().then((sumdata) => {
+                  const items = convertDataToItems(sumdata, true);
+          
+                  // Render all items initially
+                  renderItems(items);
+          
+                });
+              })
+            })
+          };
+
+          if (thirdAdresseReferenceParameter) {
+            thirdAdresseReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
+              parameterChangedEvent.getParameterAsync().then(() => {
+                worksheet.getSummaryDataAsync().then((sumdata) => {
+                  const items = convertDataToItems(sumdata, true);
+          
+                  // Render all items initially
+                  renderItems(items);
+          
+                });
+              })
+            })
+          };
+
+          if (fourthAdresseReferenceParameter) {
+            fourthAdresseReferenceParameter.addEventListener(tableau.TableauEventType.ParameterChanged, (parameterChangedEvent) => {
               parameterChangedEvent.getParameterAsync().then(() => {
                 worksheet.getSummaryDataAsync().then((sumdata) => {
                   const items = convertDataToItems(sumdata, true);
